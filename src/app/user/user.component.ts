@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user',
@@ -8,6 +9,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export class UserComponent {
+export class UserComponent 
+// implements OnInit
+{
+  http=inject(HttpClient);
+  clients: any = [];
+
+  // ngOnInit(): void {
+  //   this.fetchUsers();
+  // }
+  fetchUsers(){
+    this.http.get('https://reqres.in/api/users?page=2').subscribe((clients: any) => {
+      this.clients = clients.data;
+      
+    });
+  }
 
 }
